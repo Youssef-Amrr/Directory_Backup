@@ -1,0 +1,15 @@
+dir=./Dir
+max_backups=2
+backupdir=./Backupdir
+
+all:  createDirectory makeCron
+
+createDirectory:
+	@mkdir -p ./Backupdir
+	@mkdir -p ./Backupdir/new
+	@rm -r ./Backupdir/*
+
+makeCron:
+	@rm -f ./directory-info.last
+	@touch ./directory-info.last
+	@echo "* * * * * sh ./backup-cron.sh ${dir} ${backupdir} ${max_backups} "  | crontab -
